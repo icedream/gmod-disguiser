@@ -37,14 +37,11 @@ SWEP.Instructions =
 SWEP.Spawnable  = true
 SWEP.AdminSpawnable = true
 SWEP.UseHands = true
-SWEP.ViewModel = "models/weapons/c_toolgun.mdl" // won't be displayed anyways, see Deploy
-SWEP.WorldModel = "models/weapons/w_toolgun.mdl" // won't be displayed anyways, see Deploy
-
-// Precache models
-util.PrecacheModel(SWEP.ViewModel)
-util.PrecacheModel(SWEP.WorldModel)
+SWEP.ViewModel = "models/weapons/c_toolgun.mdl"
+SWEP.WorldModel = "models/weapons/w_toolgun.mdl"
 
 // Disable ammo system
+SWEP.DrawAmmo = false
 SWEP.Primary.ClipSize = -1
 SWEP.Primary.DefaultClip = -1
 SWEP.Primary.Automatic = false
@@ -53,6 +50,10 @@ SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = "none"
+
+// Precache models
+util.PrecacheModel(SWEP.ViewModel)
+util.PrecacheModel(SWEP.WorldModel)
 
 // Sounds
 SWEP.Sounds = {
@@ -92,7 +93,6 @@ for soundName, soundPaths in pairs(SWEP.Sounds) do
 	local internalSoundName = "Disguiser." .. soundName
 	for k, soundPath in pairs(soundPaths) do
 		if SERVER then
-			print("[Disguiser] resource.AddFile(" .. soundPath .. ")")
 			resource.AddFile("sound/" .. soundPath)
 		end
 		if !file.Exists("sound/" .. soundPath, "GAME") then
@@ -115,7 +115,6 @@ end
 function SWEP:DoShootEffect(hitpos, hitnormal, entity, physbone, bFirstTimePredicted)
 
 	if SERVER then
-		print("[Disguiser] Triggering disguiserShootFX on client " .. self.Owner:Name())
 		umsg.Start("disguiserShootFX", self.Owner)
 		umsg.Vector(hitpos)
 		umsg.VectorNormal(hitnormal)

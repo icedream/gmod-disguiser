@@ -34,7 +34,6 @@ include("sh_init.lua")
 SWEP.PrintName = "Disguiser"
 SWEP.Slot = 0
 SWEP.SlotPos = 1
-SWEP.DrawAmmo = false
 SWEP.DrawCrosshair = true
 SWEP.WepSelectIcon = surface.GetTextureID("vgui/gmod_tool" )
 SWEP.Gradient = surface.GetTextureID("gui/gradient" )

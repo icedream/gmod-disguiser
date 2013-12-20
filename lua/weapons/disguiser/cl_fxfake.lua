@@ -26,8 +26,6 @@
  */
 
 usermessage.Hook("disguiserShootFX", function(um)
-	print("[Disguiser] Received disguiserShootFX")
-
 	local hitpos = um:ReadVector()
 	local hitnormal = um:ReadVectorNormal()
 	local entity = um:ReadEntity()
