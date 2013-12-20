@@ -114,6 +114,7 @@ function SWEP:Disguise(entity)
 		self.UndisguiseAs = owner:GetModel()
 		self.UndisguiseAsSkin = owner:GetSkin()
 		self.UndisguiseAsMass = ophysobj:GetMass()
+		self.UndisguiseAsColor = owner:GetColor()
 		self.UndisguiseAsBloodColor = owner:GetBloodColor()
 		self.UndisguiseAsSolid = owner:GetSolid()
 		self.UndisguiseAsFullRotation = owner:GetAllowFullRotation()
@@ -126,7 +127,10 @@ function SWEP:Disguise(entity)
 	owner:SetModel(entity:GetModel())
 	owner:SetSolid(SOLID_BSP)
 	owner:SetBloodColor(BLOOD_COLOR_RED)
-	owner:SetSkin(entity:GetSkin()) // coloring
+	if entity:GetSkin() != nil then
+		owner:SetSkin(entity:GetSkin()) // coloring
+	end
+	owner:SetColor(entity:GetColor())
 	owner:SetPos(owner:GetPos() - Vector(0, 0, entity:OBBMins().z - 2)) // anti-stuck
 	
 	// Apply new physics, too
@@ -194,7 +198,10 @@ function SWEP:Undisguise()
 	// Revert to old model
 	owner:SetModel(self.UndisguiseAs)
 	owner:SetMoveType(MOVETYPE_WALK)
-	owner:SetSkin(self.UndisguiseAsSkin)
+	if self.UndisguiseAsSkin != nil then
+		owner:SetSkin(self.UndisguiseAsSkin)
+	end
+	owner:SetColor(self.UndisguiseAsColor)
 	owner:SetSolid(self.UndisguiseAsSolid)
 	owner:SetAllowFullRotation(self.UndisguiseAsFullRotation) // up/down rotation
 	owner:SetBloodColor(self.UndisguiseAsBloodColor)
