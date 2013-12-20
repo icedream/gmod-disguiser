@@ -33,9 +33,9 @@ usermessage.Hook("disguiserShootFX", function(um)
 	local bFirstTimePredicted = um:ReadBool()
 	
 	// Player and weapon valid?
-	if !IsValid(LocalPlayer()) || !IsValid(LocalPlayer():GetWeapon("disguiser")) then return false end
+	if !IsValid(LocalPlayer()) || !IsValid(LocalPlayer():GetWeapon()) || !IsValid(LocalPlayer():GetWeapon().DoShootEffect then return false end
 	
 	// Render shoot effect
-	LocalPlayer():GetWeapon("disguiser").DoShootEffect(
+	LocalPlayer():GetWeapon("disguiser"):DoShootEffect(
 		hitpos, hitnormal, entity, physbone, bFirstTimePredicted)
 end)
