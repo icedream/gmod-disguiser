@@ -152,5 +152,5 @@ end
 
 function SWEP:Deploy()
 	self.Owner:DrawViewModel(!self.DisguisedAs)
-	self.Owner:DrawWorldModel(!self.DisguisedAs)
+	if SERVER then self.Owner:DrawWorldModel(!self.DisguisedAs) end
 end
