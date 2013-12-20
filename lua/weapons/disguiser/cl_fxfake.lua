@@ -26,14 +26,16 @@
  */
 
 usermessage.Hook("disguiserShootFX", function(um)
+	print("[Disguiser] Received disguiserShootFX")
+
 	local hitpos = um:ReadVector()
 	local hitnormal = um:ReadVectorNormal()
 	local entity = um:ReadEntity()
 	local physbone = um:ReadLong()
 	local bFirstTimePredicted = um:ReadBool()
 	
-	// Player and weapon valid?
-	if !IsValid(LocalPlayer()) || !IsValid(LocalPlayer():GetActiveWeapon()) || !!LocalPlayer():GetActiveWeapon().DoShootEffect then return false end
+	// Can we trigger shoot effect yet?
+	if !LocalPlayer():GetActiveWeapon().DoShootEffect then return false end
 	
 	// Render shoot effect
 	LocalPlayer():GetActiveWeapon("disguiser"):DoShootEffect(

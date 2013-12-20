@@ -115,7 +115,8 @@ end
 function SWEP:DoShootEffect(hitpos, hitnormal, entity, physbone, bFirstTimePredicted)
 
 	if SERVER then
-		umsg.Start("disguiserShootFX")
+		print("[Disguiser] Triggering disguiserShootFX on client " .. self.Owner:Name())
+		umsg.Start("disguiserShootFX", self.Owner)
 		umsg.Vector(hitpos)
 		umsg.VectorNormal(hitnormal)
 		umsg.Entity(entity)
