@@ -149,6 +149,11 @@ function SWEP:DoShootEffect(hitpos, hitnormal, entity, physbone, bFirstTimePredi
 
 end
 
+function SWEP:OnRemove()
+	// Do you want to get stuck as a prop forever? NO.
+	self:Undisguise()
+end
+
 function SWEP:PreDrawViewModel(vm, ply, wep)
 	if self.Owner:GetNWBool("isDisguised", false) then
 		vm:SetRenderMode(RENDERMODE_TRANSALPHA)
