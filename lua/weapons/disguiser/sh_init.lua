@@ -149,9 +149,39 @@ function SWEP:DoShootEffect(hitpos, hitnormal, entity, physbone, bFirstTimePredi
 
 end
 
-function SWEP:Deploy()
+function SWEP:PreDrawViewModel(vm, ply, wep)
+	if self.Owner:GetNWBool("isDisguised", false) then
+		vm:SetRenderMode(RENDERMODE_TRANSALPHA)
+		vm:SetColor(Color(0,  0,  0,  0))
+	else
+		vm:SetRenderMode(RENDERMODE_TRANSALPHA)
+		vm:SetColor(Color(255,255,255,255))
+	end
+end
+
+function SWEP:DrawWorldModel()
+	if !self.Owner:GetNWBool("isDisguised", false) then
+		self.Weapon:DrawModel()
+	end
+end
+
+function SWEP:DrawWorldModelTranslucent()
+	if !self.Owner:GetNWBool("isDisguised", false) then
+		self.Weapon:DrawModel()
+	end
+end
+
+function SWEP:DrawIfNotDisguised()
 	self.Owner:DrawViewModel(!self.Owner:GetNWBool("isDisguised", false))
 	if !!self.Owner.DrawWorldModel then
 		self.Owner:DrawWorldModel(!self.Owner:GetNWBool("isDisguised", false))
 	end
+end
+
+function SWEP:Think()
+	self:DrawIfNotDisguised()
+end
+
+function SWEP:Deploy()
+	self:DrawIfNotDisguised()
 end
