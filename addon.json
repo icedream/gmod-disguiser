@@ -1,0 +1,10 @@
+{
+	"title"		:	"Disguiser SWEP",
+	"type"		:	"weapon",
+	"tags"		:	[ "fun", "comic" ],
+	"ignore"	:
+	[
+		"*.git*",
+		"*.svn*"
+	]
+}
