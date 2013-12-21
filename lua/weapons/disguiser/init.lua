@@ -227,6 +227,7 @@ function SWEP:Undisguise()
 	umsg.End()
 	
 	// Pop!
+	UndisguiseSilent()
 	owner:EmitSound("Disguiser.Undisguise")
 	
 	// We're no longer disguised
@@ -383,11 +384,4 @@ end
 
 function SWEP:GetPropConfig(name)
 	return self.PropConfiguration[name] or {}
-end
-
-function SWEP:OnRemove()
-	// Do you want to get stuck as a prop forever? NO.
-	if !!self && IsValid(self.Owner) && self.Owner:Alive() then
-		self:Undisguise()
-	end
 end
