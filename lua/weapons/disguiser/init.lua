@@ -348,9 +348,12 @@ hook.Add("PlayerDeath", "Disguiser.ThirdPersonDeath", function(victim, inflictor
 		// fake entity for spectacular death!
 		local dentity = ents.Create("prop_physics")
 		dentity:SetModel(victim:GetModel())
+		if !!victim:GetSkin() then
+			dentity:SetSkin(victim:GetSkin())
+		end
+		dentity:SetColor(victim:GetColor())
 		dentity:SetAngles(victim:GetAngles())
 		dentity:SetPos(victim:GetPos())
-		dentity:SetColor(victim:GetColor())
 		dentity:SetVelocity(victim:GetVelocity())
 		local physics = victim:GetPhysicsObject()
 		dentity:SetBloodColor(BLOOD_COLOR_RED) -- this thing was alive, ya know? :(
