@@ -38,7 +38,7 @@ holding something) and it will bug out. As a security measurement, the server fa
 reappear for now. Note that this is not an addon-specific issue.
 
 ### The addon is not loading!
-Try following the [installation instructions](#Installation) once again.
+Try following the [installation instructions](#installation) once again.
 
 ### Can I change the weapon sounds?
 Only do that if you're okay with changing Lua code (actual programming). You can look into the `sh_init.lua` and you will find SWEP.Sounds pointing at the default
