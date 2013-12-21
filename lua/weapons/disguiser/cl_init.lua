@@ -73,6 +73,14 @@ usermessage.Hook("cantDisguiseAsBannedProp", function(um)
 	end
 end)
 
+// this is usually triggered on left mouse click
+function SWEP:PrimaryAttack()
+end
+
+// this is usually triggered on right mouse click
+function SWEP:SecondaryAttack()
+end
+
 include("cl_fxfake.lua")
 include("cl_3rdperson.lua")
 include("cl_obb.lua")
