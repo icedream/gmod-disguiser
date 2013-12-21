@@ -175,7 +175,7 @@ function SWEP:Disguise(entity)
 	owner:EmitSound("Disguiser.Disguise")
 	
 	// We're now disguised!
-	victim:SetNetworkedBool("isDisguised", true)
+	owner:SetNetworkedBool("isDisguised", true)
 	self.DisguisedAs = entity:GetModel()
 	owner.Disguised = true
 	
@@ -229,7 +229,7 @@ function SWEP:Undisguise()
 	owner:EmitSound("Disguiser.Undisguise")
 	
 	// We're no longer disguised
-	victim:SetNetworkedBool("isDisguised", false)
+	owner:SetNetworkedBool("isDisguised", false)
 	self:DisableThirdPerson(owner)
 	owner:DrawViewModel(true)
 	owner:DrawWorldModel(true)
