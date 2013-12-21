@@ -150,6 +150,8 @@ function SWEP:DoShootEffect(hitpos, hitnormal, entity, physbone, bFirstTimePredi
 end
 
 function SWEP:Deploy()
-	self.Owner:DrawViewModel(!self.DisguisedAs)
-	if SERVER then self.Owner:DrawWorldModel(!self.DisguisedAs) end
+	self.Owner:DrawViewModel(!self.Owner:GetNWBool("isDisguised", false))
+	if !!self.Owner:DrawWorldModel then
+		self.Owner:DrawWorldModel(!self.Owner:GetNWBool("isDisguised", false))
+	end
 end
