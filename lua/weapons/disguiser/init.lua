@@ -108,9 +108,9 @@ function SWEP:Disguise(entity)
 	
 	// Make sure the new model is actually marked as a prop
 	if (
-		!string.sub(string.lower(entity:GetClass()), 1, 5) == "prop_"
-		|| !string.sub(string.lower(entity:GetClass()), -5, 5) == "_prop"
-		|| string.find(string.lower(entity:GetClass()), "_prop_") == nil
+		string.sub(string.lower(entity:GetClass()), 1, 5) != "prop_"
+		&& string.sub(string.lower(entity:GetClass()), -5, -1) != "_prop"
+		&& string.find(string.lower(entity:GetClass()), "_prop_") == nil
 		) then return false end
 	
 	local physobj = entity:GetPhysicsObject()
