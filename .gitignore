@@ -2,6 +2,7 @@
 ## GMA compile output
 ######################
 tmp/
+builds/
 *.gma
 
 #############
