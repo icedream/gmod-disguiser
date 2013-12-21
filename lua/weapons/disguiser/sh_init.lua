@@ -51,10 +51,6 @@ SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = "none"
 
-// Precache models
-util.PrecacheModel(SWEP.ViewModel)
-util.PrecacheModel(SWEP.WorldModel)
-
 // Sounds
 SWEP.Sounds = {
 	Disguise = {
@@ -112,6 +108,13 @@ for soundName, soundPaths in pairs(SWEP.Sounds) do
 	})
 end
 
+// Precache models
+function SWEP:Precache()
+	util.PrecacheModel(SWEP.ViewModel)
+	util.PrecacheModel(SWEP.WorldModel)
+end
+
+// Shooting effect
 function SWEP:DoShootEffect(hitpos, hitnormal, entity, physbone, bFirstTimePredicted)
 
 	if SERVER then
