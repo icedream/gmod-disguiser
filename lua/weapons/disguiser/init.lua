@@ -350,6 +350,7 @@ hook.Add("PlayerDeath", "Disguiser.ThirdPersonDeath", function(victim, inflictor
 		dentity:SetModel(victim:GetModel())
 		dentity:SetAngles(victim:GetAngles())
 		dentity:SetPos(victim:GetPos())
+		dentity:SetColor(victim:GetColor())
 		dentity:SetVelocity(victim:GetVelocity())
 		local physics = victim:GetPhysicsObject()
 		dentity:SetBloodColor(BLOOD_COLOR_RED) -- this thing was alive, ya know? :(
