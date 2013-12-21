@@ -387,5 +387,7 @@ end
 
 function SWEP:OnRemove()
 	// Do you want to get stuck as a prop forever? NO.
-	self:Undisguise()
+	if !!self && IsValid(self.Owner) && self.Owner:Alive() then
+		self:Undisguise()
+	end
 end
