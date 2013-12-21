@@ -96,7 +96,7 @@ for soundName, soundPaths in pairs(SWEP.Sounds) do
 			resource.AddFile("sound/" .. soundPath)
 		end
 		if !file.Exists("sound/" .. soundPath, "GAME") then
-			print("[Disguiser] WARNING: Sound not found: " .. soundPath)
+			MsgC(Color(255, 0, 0), "[Disguiser] WARNING: Sound not found: " .. soundPath)
 		end
 		util.PrecacheSound(soundPath)
 	end
