@@ -105,7 +105,9 @@ function SWEP:Disguise(entity)
 	local owner = self.Owner
 	
 	// Make sure we aren't already that model
-	if (owner:GetModel() == entity:GetModel() && owner:GetSkin() == entity:GetSkin()) then return true end
+	if (owner:GetModel() == entity:GetModel()
+		&& owner:GetSkin() == entity:GetSkin()
+		&& owner:GetColor() == entity:GetColor()) then return true end
 	
 	// Make sure the new model is actually marked as a prop
 	if (
@@ -125,7 +127,6 @@ function SWEP:Disguise(entity)
 		self.UndisguiseAsColor = owner:GetColor()
 		self.UndisguiseAsBloodColor = owner:GetBloodColor()
 		self.UndisguiseAsSolid = owner:GetSolid()
-		self.UndisguiseAsFullRotation = owner:GetAllowFullRotation()
 	end
 	
 	// Disguise as given model
@@ -212,7 +213,6 @@ function SWEP:Undisguise()
 	end
 	owner:SetColor(self.UndisguiseAsColor)
 	owner:SetSolid(self.UndisguiseAsSolid)
-	owner:SetAllowFullRotation(self.UndisguiseAsFullRotation) // up/down rotation
 	owner:SetBloodColor(self.UndisguiseAsBloodColor)
 	
 	// Revert to old physics
