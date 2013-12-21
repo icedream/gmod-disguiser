@@ -192,6 +192,13 @@ function SWEP:Undisguise()
 	// Make sure we have an old model to revert to
 	if (self.UndisguiseAs == nil) then return false end
 	
+	// Make sure the new model is not a non-studio model as that
+	// might crash out the server.
+	// I did not yet find a better solution as I was not bothering to
+	// debug it by using the model class. Would take far too long to
+	// experiment.
+	if (string.sub(entity:GetModel(), 1, 1) == "*") then return false end
+	
 	local owner = self.Owner
 	local ophysobj = owner:GetPhysicsObject()
 	
@@ -258,7 +265,7 @@ function SWEP:PrimaryAttack()
 	if !trace.HitNonWorld
 		|| !trace.Entity
 		|| !entity:GetModel()
-		|| table.HasValue(ExploitableDoors, entity:GetClass()) /* banned door exploit */
+		|| table.HasValue(ExploitableDoors, entity:GetClass()) // banned door exploit
 		then
 		return false
 	end
