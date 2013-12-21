@@ -39,6 +39,7 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("cl_3rdperson.lua")
 AddCSLuaFile("cl_obb.lua")
 AddCSLuaFile("cl_fxfake.lua")
+AddCSLuaFile("cl_worldtips.lua")
 AddCSLuaFile("sh_init.lua")
 
 // Shared stuff

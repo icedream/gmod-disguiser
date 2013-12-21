@@ -39,6 +39,11 @@ SWEP.WepSelectIcon = surface.GetTextureID("vgui/gmod_tool" )
 SWEP.Gradient = surface.GetTextureID("gui/gradient" )
 SWEP.InfoIcon = surface.GetTextureID("gui/info")
 
+include("cl_fxfake.lua")
+include("cl_3rdperson.lua")
+include("cl_obb.lua")
+include("cl_worldtips.lua")
+
 local BannedPropError_Entity = nil
 local BannedPropError_Time = 5
 local function BannedPropError()
@@ -80,7 +85,3 @@ end
 // this is usually triggered on right mouse click
 function SWEP:SecondaryAttack()
 end
-
-include("cl_fxfake.lua")
-include("cl_3rdperson.lua")
-include("cl_obb.lua")
