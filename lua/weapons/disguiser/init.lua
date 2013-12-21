@@ -384,3 +384,8 @@ end
 function SWEP:GetPropConfig(name)
 	return self.PropConfiguration[name] or {}
 end
+
+function SWEP:OnRemove()
+	// Do you want to get stuck as a prop forever? NO.
+	self:Undisguise()
+end
