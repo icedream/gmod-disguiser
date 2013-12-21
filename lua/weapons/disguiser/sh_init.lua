@@ -151,7 +151,7 @@ end
 
 function SWEP:Deploy()
 	self.Owner:DrawViewModel(!self.Owner:GetNWBool("isDisguised", false))
-	if !!self.Owner:DrawWorldModel then
+	if !!self.Owner.DrawWorldModel then
 		self.Owner:DrawWorldModel(!self.Owner:GetNWBool("isDisguised", false))
 	end
 end
