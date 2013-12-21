@@ -278,10 +278,16 @@ function SWEP:PrimaryAttack()
 		return false
 	end
 	
+	// Make sure the new model is actually marked as a prop
+	if (
+		string.sub(string.lower(entity:GetClass()), 1, 5) != "prop_"
+		&& string.sub(string.lower(entity:GetClass()), -5, -1) != "_prop"
+		&& string.find(string.lower(entity:GetClass()), "_prop_") == nil
+		) then return false end
+	
 	// Now let's disguise, shall we?
 	self:DoShootEffect(trace.HitPos, trace.HitNormal, trace.Entity, trace.PhysicsBone, IsFirstTimePredicted())
 	self:Disguise(entity)
-	
 end
 
 // this is usually triggered on right mouse click
