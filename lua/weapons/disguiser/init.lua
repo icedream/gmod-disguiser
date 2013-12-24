@@ -227,7 +227,6 @@ function SWEP:Undisguise()
 	umsg.End()
 	
 	// Pop!
-	UndisguiseSilent()
 	owner:EmitSound("Disguiser.Undisguise")
 	
 	// We're no longer disguised

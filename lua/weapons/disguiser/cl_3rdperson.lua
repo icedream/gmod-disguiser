@@ -30,6 +30,8 @@
 hook.Add("CalcView", "Disguiser.ThirdPersonCalcView", function(player, pos, angles, fov)
 	local smoothscale = 1
 	
+	if !IsValid(player) then return end
+	
 	if player:GetNetworkedBool("thirdperson") then
 		angles = player:GetAimVector():Angle()
 
@@ -54,7 +56,6 @@ hook.Add("CalcView", "Disguiser.ThirdPersonCalcView", function(player, pos, angl
 		end 
 		
 		// smoothing - approaches a bit more slowly to the actual target position
-		pos = targetpos
 		pos = Vector(
 			math.Approach(pos.x, targetpos.x, math.abs(targetpos.x - pos.x) * smoothscale),
 			math.Approach(pos.y, targetpos.y, math.abs(targetpos.y - pos.y) * smoothscale),
@@ -92,40 +93,42 @@ end)
 
 hook.Add("HUDPaint", "Disguiser.ThirdPersonHUDPaint", function()
 	local player = LocalPlayer()
-	if !player:GetNetworkedBool("thirdperson") then
+	if !IsValid(player) then
 		return
 	end
 
-	// trace from muzzle to hit pos
-	local t = {}
-	t.start = player:GetShootPos()
-	t.endpos = t.start + player:GetAimVector() * 9000
-	t.filter = player
-	local tr = util.TraceLine(t)
-	local pos = tr.HitPos:ToScreen()
-	local fraction = math.min((tr.HitPos - t.start):Length(), 1024) / 1024
-	local size = 10 + 20 * (1.0 - fraction)
-	local offset = size * 0.5
-	local offset2 = offset - (size * 0.1)
-	local hit = tr.HitNonWorld
+	if player:GetNetworkedBool("thirdperson") && player:Alive() then
+		// trace from muzzle to hit pos
+		local t = {}
+		t.start = player:GetShootPos()
+		t.endpos = t.start + player:GetAimVector() * 9000
+		t.filter = player
+		local tr = util.TraceLine(t)
+		local pos = tr.HitPos:ToScreen()
+		local fraction = math.min((tr.HitPos - t.start):Length(), 1024) / 1024
+		local size = 10 + 20 * (1.0 - fraction)
+		local offset = size * 0.5
+		local offset2 = offset - (size * 0.1)
+		local hit = tr.HitNonWorld
 
-	// trace from camera to hit pos, if blocked, red crosshair
-	local tr = util.TraceLine({
-		start = player:GetPos(),
-		endpos = tr.HitPos + tr.HitNormal * 5,
-		filter = player,
-		mask = MASK_SHOT
-	})
-	surface.SetDrawColor(255, 255, 255, 255)
-	if (hit) then
-		surface.SetDrawColor(0, 192, 24, 255)
+		// trace from camera to hit pos, if blocked, red crosshair
+		local tr = util.TraceLine({
+			start = player:GetPos(),
+			endpos = tr.HitPos + tr.HitNormal * 5,
+			filter = player,
+			mask = MASK_SHOT
+		})
+		surface.SetDrawColor(255, 255, 255, 255)
+		if (hit) then
+			surface.SetDrawColor(0, 192, 24, 255)
+		end
+		surface.DrawLine(pos.x - offset, pos.y, pos.x - offset2, pos.y)
+		surface.DrawLine(pos.x + offset, pos.y, pos.x + offset2, pos.y)
+		surface.DrawLine(pos.x, pos.y - offset, pos.x, pos.y - offset2)
+		surface.DrawLine(pos.x, pos.y + offset, pos.x, pos.y + offset2)
+		surface.DrawLine(pos.x - 1, pos.y, pos.x + 1, pos.y)
+		surface.DrawLine(pos.x, pos.y - 1, pos.x, pos.y + 1)
 	end
-	surface.DrawLine(pos.x - offset, pos.y, pos.x - offset2, pos.y)
-	surface.DrawLine(pos.x + offset, pos.y, pos.x + offset2, pos.y)
-	surface.DrawLine(pos.x, pos.y - offset, pos.x, pos.y - offset2)
-	surface.DrawLine(pos.x, pos.y + offset, pos.x, pos.y + offset2)
-	surface.DrawLine(pos.x - 1, pos.y, pos.x + 1, pos.y)
-	surface.DrawLine(pos.x, pos.y - 1, pos.x, pos.y + 1)
 end)
 
 hook.Add("HUDShouldDraw", "Disguiser.ThirdPersonHUDShouldDraw", function(name)
