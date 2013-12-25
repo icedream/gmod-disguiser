@@ -27,31 +27,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-hook.Add("CalcView", "Disguiser.ThirdPersonCalcView", function(player, pos, angles, fov)
-	local smoothscale = 1
+hook.Add("CalcView", "Disguiser.ThirdPersonCalcView", function(ply, pos, angles, fov)
+	smoothscale = 1
 	
-	if !IsValid(player) then return end
-	
-	if player:GetNetworkedBool("thirdperson") then
-		angles = player:GetAimVector():Angle()
+	if IsValid(ply) && ply:Alive() && ply:GetNetworkedBool("thirdperson") then
+		av = ply:GetAimVector()
+		
+		if !av then return end
+		
+		angles = av:Angle()
 
-		local targetpos = Vector(0, 0, player:OBBMaxs().z)
-		if player:KeyDown(IN_DUCK) then
-			if player:GetVelocity():Length() > 0 then
+		local targetpos = Vector(0, 0, ply:OBBMaxs().z)
+		if ply:KeyDown(IN_DUCK) then
+			if ply:GetVelocity():Length() > 0 then
 				targetpos.z = targetpos.z / 1.33
 		 	else
 				targetpos.z = targetpos.z / 2
 			end
 		end
 
-		player:SetAngles(angles)
+		ply:SetAngles(angles)
 		
 		local targetfov = fov
-		if player:GetVelocity():DotProduct(player:GetForward()) > 10 then
-			if player:KeyDown(IN_SPEED) then
-				targetpos = targetpos + player:GetForward() * -10
+		if ply:GetVelocity():DotProduct(ply:GetForward()) > 10 then
+			if ply:KeyDown(IN_SPEED) then
+				targetpos = targetpos + ply:GetForward() * -10
 			else
-				targetpos = targetpos + player:GetForward() * -5
+				targetpos = targetpos + ply:GetForward() * -5
 			end
 		end 
 		
@@ -64,16 +66,16 @@ hook.Add("CalcView", "Disguiser.ThirdPersonCalcView", function(player, pos, angl
 		
 		// offset it by the stored amounts, but trace so it stays outside walls
 		// we don't smooth this so the camera feels like its tightly following the mouse
-		local offset = Vector(50 + (player:OBBMaxs().z - player:OBBMins().z), 0, 10)
+		local offset = Vector(50 + (ply:OBBMaxs().z - ply:OBBMins().z), 0, 10)
 		local t = {
-			start = player:GetPos() + pos,
-			endpos = (player:GetPos() + pos)
+			start = ply:GetPos() + pos,
+			endpos = (ply:GetPos() + pos)
 				+ (angles:Forward() * -offset.x)
 				+ (angles:Right() * offset.y)
 				+ (angles:Up() * offset.z),
-			filter = player
+			filter = ply
 		}
-		if player:GetVehicle():IsValid() then
+		if ply:GetVehicle():IsValid() then
 			pos = t.endpos
 		else
 			local tr = util.TraceLine(t)
@@ -87,22 +89,19 @@ hook.Add("CalcView", "Disguiser.ThirdPersonCalcView", function(player, pos, angl
 		fov = targetfov
 		fov = math.Approach(fov, targetfov, math.abs(targetfov - fov) * smoothscale)
 		
-		return GAMEMODE:CalcView(player, pos, angles, fov)
+		return GAMEMODE:CalcView(ply, pos, angles, fov)
 	end
 end)
 
 hook.Add("HUDPaint", "Disguiser.ThirdPersonHUDPaint", function()
-	local player = LocalPlayer()
-	if !IsValid(player) then
-		return
-	end
-
-	if player:GetNetworkedBool("thirdperson") && player:Alive() then
+	local ply = LocalPlayer()
+	
+	if IsValid(ply) && ply:Alive() && ply:GetNetworkedBool("thirdperson") then
 		// trace from muzzle to hit pos
 		local t = {}
-		t.start = player:GetShootPos()
-		t.endpos = t.start + player:GetAimVector() * 9000
-		t.filter = player
+		t.start = ply:GetShootPos()
+		t.endpos = t.start + ply:GetAimVector() * 9000
+		t.filter = ply
 		local tr = util.TraceLine(t)
 		local pos = tr.HitPos:ToScreen()
 		local fraction = math.min((tr.HitPos - t.start):Length(), 1024) / 1024
@@ -113,9 +112,9 @@ hook.Add("HUDPaint", "Disguiser.ThirdPersonHUDPaint", function()
 
 		// trace from camera to hit pos, if blocked, red crosshair
 		local tr = util.TraceLine({
-			start = player:GetPos(),
+			start = ply:GetPos(),
 			endpos = tr.HitPos + tr.HitNormal * 5,
-			filter = player,
+			filter = ply,
 			mask = MASK_SHOT
 		})
 		surface.SetDrawColor(255, 255, 255, 255)
@@ -132,7 +131,7 @@ hook.Add("HUDPaint", "Disguiser.ThirdPersonHUDPaint", function()
 end)
 
 hook.Add("HUDShouldDraw", "Disguiser.ThirdPersonHUDShouldDraw", function(name)
-	if name == "CHudCrosshair" and LocalPlayer():GetNetworkedInt("thirdperson") == 1 then
+	if name == "CHudCrosshair" and IsValid(LocalPlayer()) and LocalPlayer():Alive() and LocalPlayer():GetNetworkedBool("thirdperson") then
 		return false
 	end
 end)

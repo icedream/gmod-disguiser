@@ -332,18 +332,16 @@ function SWEP:EnableThirdPerson(player)
 end
 
 hook.Add("PlayerDeath", "Disguiser.ThirdPersonDeath", function(victim, inflictor, killer)
-
-	victim:SetNetworkedBool("thirdperson", false)
-	victim:SetNetworkedBool("isDisguised", false)
-	local ventity = victim:GetViewEntity()
-	
 	// Escape third-person mode
-	if (IsValid(ventity)) then
-		ventity:Remove()
-		victim:SetViewEntity(victim)
-	end
-	
-	if (!!victim.Disguised) then
+	if victim:GetNWBool("thirdperson") || victim:GetNWBool("isDisguised") then
+		local ventity = victim:GetViewEntity()
+		if (IsValid(ventity)) then
+			victim:SetViewEntity(victim)
+			ventity:Remove()
+		end
+		victim:SetNetworkedBool("thirdperson", false)
+		victim:SetNetworkedBool("isDisguised", false)
+		
 		// fake entity for spectacular death!
 		local dentity = ents.Create("prop_physics")
 		dentity:SetModel(victim:GetModel())
@@ -366,6 +364,7 @@ hook.Add("PlayerDeath", "Disguiser.ThirdPersonDeath", function(victim, inflictor
 		dentity:Fire("kill", "", 2)
 		dentity:Fire("enablemotion","",0)
 		
+		/*
 		// Manually draw additional blood (for some reason setting the blood color has no effect)
 		local traceworld = {}
 		traceworld.start = victim:GetPos() + Vector(0, 0, 20)
@@ -378,6 +377,8 @@ hook.Add("PlayerDeath", "Disguiser.ThirdPersonDeath", function(victim, inflictor
 		edata:SetEntity(dentity)
 		util.Effect("BloodImpact", edata)
 		util.Decal("Splash.Large", trw.HitPos + trw.HitNormal, trw.HitPos - trw.HitNormal)
+
+		*/
 	end
 end)
 
