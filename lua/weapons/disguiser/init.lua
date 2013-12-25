@@ -365,8 +365,17 @@ hook.Add("PlayerDeath", "Disguiser.ThirdPersonDeath", function(victim, inflictor
 		dentity:Fire("enablemotion","",0)
 		
 		// Let the entity bleed wahahaha. I'm mad, ain't I?
+		local traceworld = {}
+		traceworld.start = victim:GetPos() + Vector(0, 0, 20)
+		traceworld.endpos = traceworld.start + (Vector(0,0,-1) * 8000) // aim max. 8000 units down
+		traceworld.filter = victim
+		local trw = util.TraceLine(traceworld) // Send the trace and get the results.
+		local edata = EffectData()
+		edata:SetStart(victim:GetPos() - physics:GetVelocity())
+		edata:SetOrigin(victim:GetPos())
+		edata:SetNormal(trw.Normal)
+		edata:SetEntity(dentity)
 		util.Effect("BloodImpact", edata)
-		util.Decal("Splash.Large", trw.HitPos + trw.HitNormal, trw.HitPos - trw.HitNormal)
 		
 		// BOOOOM!
 		local boomFx = ents.Create("env_explosion")
