@@ -381,7 +381,7 @@ hook.Add("PlayerDeath", "Disguiser.ThirdPersonDeath", function(victim, inflictor
 		local boomFx = ents.Create("env_explosion")
 		boomFx:SetPos(dentity:GetPos())
 		boomFx:Spawn()
-		boomFx.Fire("explode", "", 0)
+		boomFx:Fire("explode", "", 0)
 	end
 end)
 
