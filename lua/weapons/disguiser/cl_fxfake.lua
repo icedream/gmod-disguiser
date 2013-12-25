@@ -5,9 +5,8 @@
  *   cl_fxfake.lua
  *
  * Purpose:
- *   Fake shoot effect on client-side via a trigger from server-side, as
- *   for some reason on multiplayer servers the effect is not rendered on
- *   client-side automatically.
+ *   Fake shoot and blood effect on client-side via a trigger from server-side,
+ *   as for some reason the effects are not rendered on client-side automatically.
  *
  * Copyright (C) 2013 Carl Kittelberger (Icedream)
  *
@@ -32,10 +31,21 @@ usermessage.Hook("disguiserShootFX", function(um)
 	local physbone = um:ReadLong()
 	local bFirstTimePredicted = um:ReadBool()
 	
-	// Can we trigger shoot effect yet?
-	if !LocalPlayer():GetActiveWeapon().DoShootEffect then return false end
+	-- Can we trigger shoot effect yet?
+	swep = LocalPlayer():GetActiveWeapon()
+	if !swep.DoShootEffect then return false end
 	
-	// Render shoot effect
-	LocalPlayer():GetActiveWeapon("disguiser"):DoShootEffect(
+	-- Render shoot effect
+	swep:DoShootEffect(
 		hitpos, hitnormal, entity, physbone, bFirstTimePredicted)
+end)
+
+usermessage.Hook("disguiserBlood", function(um)
+	local edata = EffectData()
+	edata:SetStart(um:ReadVector())
+	edata:SetOrigin(um:ReadVector())
+	edata:SetNormal(um:ReadVectorNormal())
+	edata:SetEntity(um:ReadEntity())
+	util.Effect("BloodImpact", edata)
+	util.Decal("Splash.Large", um:ReadVector(), um:ReadVector())
 end)

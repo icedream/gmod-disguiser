@@ -364,11 +364,11 @@ hook.Add("PlayerDeath", "Disguiser.ThirdPersonDeath", function(victim, inflictor
 		dentity:Fire("kill", "", 2)
 		dentity:Fire("enablemotion","",0)
 		
-		/*
 		// Manually draw additional blood (for some reason setting the blood color has no effect)
 		local traceworld = {}
 		traceworld.start = victim:GetPos() + Vector(0, 0, 20)
 		traceworld.endpos = traceworld.start + (Vector(0,0,-1) * 8000) // aim max. 8000 units down
+		traceworld.filter = victim
 		local trw = util.TraceLine(traceworld) // Send the trace and get the results.
 		local edata = EffectData()
 		edata:SetStart(victim:GetPos() - physics:GetVelocity())
@@ -377,8 +377,16 @@ hook.Add("PlayerDeath", "Disguiser.ThirdPersonDeath", function(victim, inflictor
 		edata:SetEntity(dentity)
 		util.Effect("BloodImpact", edata)
 		util.Decal("Splash.Large", trw.HitPos + trw.HitNormal, trw.HitPos - trw.HitNormal)
-
-		*/
+		
+		// Make it appear on clientside of victim
+		umsg.Start("disguiserBlood", victim)
+		umsg.Vector(victim:GetPos() - physics:GetVelocity())
+		umsg.Vector(victim:GetPos())
+		umsg.VectorNormal(trw.Normal)
+		umsg.Entity(dentity)
+		umsg.Vector(trw.HitPos + trw.HitNormal)
+		umsg.Vector(trw.HitPos - trw.HitNormal)
+		umsg.End()
 	end
 end)
 
