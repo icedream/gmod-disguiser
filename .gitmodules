@@ -1,0 +1,3 @@
+[submodule "tools/luasrcdiet"]
+	path = tools/luasrcdiet
+	url = https://github.com/LuaDist/luasrcdiet
