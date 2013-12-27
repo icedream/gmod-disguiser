@@ -353,7 +353,9 @@ hook.Add("PlayerDeath", "Disguiser.ThirdPersonDeath", function(victim, inflictor
 		dentity:SetPos(victim:GetPos())
 		dentity:SetVelocity(victim:GetVelocity())
 		local physics = victim:GetPhysicsObject()
-		dentity:SetBloodColor(BLOOD_COLOR_RED) -- this thing was alive, ya know? :(
+		if !!victim:GetBloodColor() then
+			dentity:SetBloodColor(victim:GetBloodColor()) -- this thing was alive, ya know? :(
+		end
 		dentity:Spawn()
 		local dphysics = dentity:GetPhysicsObject()
 		dphysics:SetAngles(physics:GetAngles())
@@ -365,7 +367,6 @@ hook.Add("PlayerDeath", "Disguiser.ThirdPersonDeath", function(victim, inflictor
 		dentity:Fire("enablemotion","",0)
 		
 		// Let the entity bleed wahahaha. I'm mad, ain't I?
-		victim:SetBloodColor(BLOOD_COLOR_RED) -- this thing was alive, ya know? :(
 		local traceworld = {}
 		traceworld.start = victim:GetPos() + Vector(0, 0, 20)
 		traceworld.endpos = traceworld.start + (Vector(0,0,-1) * 8000) // aim max. 8000 units down
@@ -377,6 +378,12 @@ hook.Add("PlayerDeath", "Disguiser.ThirdPersonDeath", function(victim, inflictor
 		edata:SetNormal(trw.Normal)
 		edata:SetEntity(dentity)
 		util.Effect("BloodImpact", edata)
+		
+		// Reset the victim's bounding box to solve the issue with getting stuck at spawn
+		victim:ResetHull()
+		umsg.Start("resetHull", owner)
+		umsg.Entity(owner)
+		umsg.End()
 	end
 end)
 
