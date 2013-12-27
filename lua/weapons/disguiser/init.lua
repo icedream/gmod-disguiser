@@ -361,10 +361,11 @@ hook.Add("PlayerDeath", "Disguiser.ThirdPersonDeath", function(victim, inflictor
 		dphysics:SetDamping(physics:GetDamping())
 		dphysics:SetInertia(physics:GetInertia())
 		dentity:Fire("break", "", 0)
-		dentity:Fire("kill", "", 2)
+		dentity:Fire("kill", "", 1)
 		dentity:Fire("enablemotion","",0)
 		
 		// Let the entity bleed wahahaha. I'm mad, ain't I?
+		victim:SetBloodColor(BLOOD_COLOR_RED) -- this thing was alive, ya know? :(
 		local traceworld = {}
 		traceworld.start = victim:GetPos() + Vector(0, 0, 20)
 		traceworld.endpos = traceworld.start + (Vector(0,0,-1) * 8000) // aim max. 8000 units down
@@ -376,12 +377,6 @@ hook.Add("PlayerDeath", "Disguiser.ThirdPersonDeath", function(victim, inflictor
 		edata:SetNormal(trw.Normal)
 		edata:SetEntity(dentity)
 		util.Effect("BloodImpact", edata)
-		
-		// BOOOOM!
-		local boomFx = ents.Create("env_explosion")
-		boomFx:SetPos(dentity:GetPos())
-		boomFx:Spawn()
-		boomFx:Fire("explode", "", 0)
 	end
 end)
 
