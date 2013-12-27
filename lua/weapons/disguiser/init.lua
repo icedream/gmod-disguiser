@@ -381,8 +381,8 @@ hook.Add("PlayerDeath", "Disguiser.ThirdPersonDeath", function(victim, inflictor
 		
 		// Reset the victim's bounding box to solve the issue with getting stuck at spawn
 		victim:ResetHull()
-		umsg.Start("resetHull", owner)
-		umsg.Entity(owner)
+		umsg.Start("resetHull", victim)
+		umsg.Entity(victim)
 		umsg.End()
 	end
 end)
