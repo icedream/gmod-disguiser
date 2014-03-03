@@ -149,11 +149,7 @@ function SWEP:Disguise(entity)
 	// Apply new hull
 	local obbmaxs = entity:OBBMaxs()
 	local obbmins = entity:OBBMins()
-	/*
-	local obbmargin = Vector(2, 2, 0)
-	obbmaxs = obbmaxs + obbmargin
-	obbmins = obbmins - obbmargin
-	*/
+	
 	// Look for correction values
 	local pcfg = self:GetPropConfig(entity:GetModel())
 	if !!pcfg["OBBMaxsCorrection"] then
@@ -333,13 +329,18 @@ end
 
 hook.Add("PlayerDeath", "Disguiser.ThirdPersonDeath", function(victim, inflictor, killer)
 	// Escape third-person mode
-	if victim:GetNWBool("thirdperson") || victim:GetNWBool("isDisguised") then
+	if victim:GetNWBool("thirdperson") then
+		victim:SetNetworkedBool("thirdperson", false)
+		
 		local ventity = victim:GetViewEntity()
 		if (IsValid(ventity)) then
 			victim:SetViewEntity(victim)
 			ventity:Remove()
 		end
-		victim:SetNetworkedBool("thirdperson", false)
+	end
+	
+	// Undisguise basically but with a few tweaks to avoid some bugs
+	if victim:GetNWBool("isDisguised") then
 		victim:SetNetworkedBool("isDisguised", false)
 		
 		// fake entity for spectacular death!
