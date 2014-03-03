@@ -96,7 +96,7 @@ end)
 hook.Add("HUDPaint", "Disguiser.ThirdPersonHUDPaint", function()
 	local ply = LocalPlayer()
 	
-	if IsValid(ply) && ply:Alive() && ply:GetNetworkedBool("thirdperson") then
+	if IsValid(ply) && !!ply["GetAimVector"] && ply:Alive() && ply:GetNetworkedBool("thirdperson") then
 		// trace from muzzle to hit pos
 		local t = {}
 		t.start = ply:GetShootPos()
