@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>The Disguiser SWEP by icedream</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/icedream/gmod-disguiser">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/icedream/gmod-disguiser/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/icedream/gmod-disguiser/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>The Disguiser SWEP</h1>
+          <p>Disguiser weapon for GMod 13.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/icedream">icedream</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a name="disguiser-swep" class="anchor" href="#disguiser-swep"><span class="octicon octicon-link"></span></a>Disguiser SWEP</h1>
+
+<p>So you always wanted to be able to disguise as another item on the map in Sandbox or
+any other game mode than Prop Hunt? You were always annoyed by how you were able to
+see yourself being able to rotate but without knowing you were still standing all the
+wrong way?</p>
+
+<p>That's over now with this independent weapon code. It let's you have a (somewhat)
+tool gun with which you can experience being a prop while not essentially playing
+Prop Hunt (or you can play Prop Hunt with your friends without the usual rules).</p>
+
+<h2>
+<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<ul>
+<li>A properly working Garry's Mod 13 installation</li>
+</ul><h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>This inside the addons folder. You can compile this as a <code>.gma</code> file or you can put this into a subdirectory, both works.
+This addon will also be downloadable via the Steam Workshop, so if you're too lazy to do it now, wait for the release.</p>
+
+<h2>
+<a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to use?</h2>
+
+<p>Spawn the weapon by any means (in Sandbox via your spawn menu key, usually hold Q for that).
+The use your fire/primary attack key (usually left mouse key) while pointing at any thing (prop) on the map.
+Pop! You are now that prop, that is if you aimed properly.
+With the secondary attack key (usually right mouse key) you can switch back to a human being.</p>
+
+<h2>
+<a name="faq" class="anchor" href="#faq"><span class="octicon octicon-link"></span></a>FAQ</h2>
+
+<h3>
+<a name="when-i-get-killed-a-warning-something-is-creating-errors-or-similar-pops-up-on-the-top-left-of-gmod-and-i-get-stuck-outside-the-map-i-also-disappear-from-the-player-list-what-is-happening" class="anchor" href="#when-i-get-killed-a-warning-something-is-creating-errors-or-similar-pops-up-on-the-top-left-of-gmod-and-i-get-stuck-outside-the-map-i-also-disappear-from-the-player-list-what-is-happening"><span class="octicon octicon-link"></span></a>When I get killed, a warning "Something is creating errors" (or similar) pops up on the top left of GMod and I get stuck outside the map. I also disappear from the player list. What is happening?</h3>
+
+<p>You triggered a bug of Garry's Mod. For some reason some internal code isn't properly able to handle player death events in some cases (like when you get killed while
+holding something) and it will bug out. As a security measurement, the server fakes a player disconnection. All you can do is reconnect and hope for the bug to not
+reappear for now. Note that this is not an addon-specific issue.</p>
+
+<h3>
+<a name="the-addon-is-not-loading" class="anchor" href="#the-addon-is-not-loading"><span class="octicon octicon-link"></span></a>The addon is not loading!</h3>
+
+<p>Try following the <a href="#installation">installation instructions</a> once again.</p>
+
+<h3>
+<a name="can-i-change-the-weapon-sounds" class="anchor" href="#can-i-change-the-weapon-sounds"><span class="octicon octicon-link"></span></a>Can I change the weapon sounds?</h3>
+
+<p>Only do that if you're okay with changing Lua code (actual programming). You can look into the <code>sh_init.lua</code> and you will find SWEP.Sounds pointing at the default
+sound paths. Make sure you also put the sounds onto the server into the "sounds/" folder or else you will end up having no sound at all and seeing the error message
+"can not find sound" in the debug console instead.</p>
+
+<h3>
+<a name="will-there-be-a-gamemode-based-on-this-weapon" class="anchor" href="#will-there-be-a-gamemode-based-on-this-weapon"><span class="octicon octicon-link"></span></a>Will there be a gamemode based on this weapon?</h3>
+
+<p>There already is the old and traditional "Prop Hunt" code which got ported to Garry's Mod 13 by xSpaceSoft, though I am going to make a re-implementation based on this
+weapon for bug fixes.</p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>This piece of code is licensed under the <a href="http://www.gnu.org/licenses/agpl-3.0">GNU Affero General Public License Version 3</a>.
+Why GPL? Because it's the standard license for open-source programs. Why Affero? Because Garry's Mod lets you steal the lua code
+(at least for the client).</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
