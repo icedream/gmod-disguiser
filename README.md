@@ -1,6 +1,8 @@
 Disguiser SWEP
 ==============
 
+[![YouTube: [gmod] Derping around with the Disguiser ](http://img.youtube.com/vi/IvMkNIm4Ro0/0.jpg)](http://www.youtube.com/watch?v=IvMkNIm4Ro0&feature=github)
+
 So you always wanted to be able to disguise as another item on the map in Sandbox or
 any other game mode than Prop Hunt? You were always annoyed by how you were able to
 see yourself being able to rotate but without knowing you were still standing all the
