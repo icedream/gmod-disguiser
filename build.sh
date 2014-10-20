@@ -50,14 +50,12 @@ copy_flt() {
 	find "$source" -name "$filter" -type "f" | while read i; do cp "$i" "$target/$(reldir $source $i)"; done
 }
 
-if [ ! -e builds ]; then
-	mkdir builds
-fi
+mkdir -p builds
 
-if [ -e tmp]; then
+if [ -e tmp ]; then
 	rm -rf tmp
 fi
-mkdir tmp
+mkdir -p tmp
 
 # Root path
 workspace=$(pwd)
@@ -75,12 +73,7 @@ copy_flt "." "tmp" "*.txt"
 
 # Compile LUA files
 pushd lua
-mkdir ../tmp/lua
-find . -type d | while read absfile; do
-	file="lua/$absfile"
-	echo "Creating $file..."
-	mkdir "../tmp/$file"
-)
+mkdir -p ../tmp/lua
 find . -type f -name '*.lua' | while read absfile; do
 	file="lua/$absfile"
 	echo "Compiling $file..."
