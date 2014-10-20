@@ -46,8 +46,8 @@ copy_flt() {
 	source="$1"
 	target="$2"
 
-	find "$source" -type "d" | while read i; do mkdir -p "$target/$(reldir $source $i)"; done
-	find "$source" -name "$filter" -type "f" | while read i; do cp "$i" "$target/$(reldir $source $i)"; done
+	find "$source" -type "d" -not -path "./tmp/*"  | while read i; do mkdir -p "$target/$(reldir $source $i)"; done
+	find "$source" -name "$filter" -type "f" -not -path "./tmp/*"  | while read i; do cp "$i" "$target/$(reldir $source $i)"; done
 }
 
 mkdir -p builds
@@ -70,6 +70,8 @@ copy_flt "." "tmp" "*.mp3"
 copy_flt "." "tmp" "*.jpg"
 copy_flt "." "tmp" "*.png"
 copy_flt "." "tmp" "*.txt"
+
+find tmp
 
 # Compile LUA files
 pushd lua
