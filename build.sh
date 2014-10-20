@@ -77,11 +77,13 @@ mkdir -p ../tmp/lua
 find . -type f -name '*.lua' | while read absfile; do
 	file="lua/$absfile"
 	echo "Compiling $file..."
-	luac52 -o "../tmp/$file" "$absfile" || (
-		echo "Could not compile $file, only copying..."
-		cp "$absfile" "../tmp/$file"
+	luac52 -o "../tmp/$file.luac" "$absfile" && (
+		rm "/tmp/$file"
+		mv "/tmp/$file.luac" "/tmp/$file"
+	) || (
+		echo "Could not compile $file, leaving as is."
 	)
-)
+done
 popd
 
 # Create the GMA file
