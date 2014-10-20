@@ -86,7 +86,7 @@ hook.Add("CalcView", "Disguiser.ThirdPersonCalcView", function(ply, pos, angles,
 		end
 
 		// Smoothing FOV change
-		fov = targetfov
+		fov = targetfov -- comment or remove this to enable smoothing
 		fov = math.Approach(fov, targetfov, math.abs(targetfov - fov) * smoothscale)
 		
 		return GAMEMODE:CalcView(ply, pos, angles, fov)
