@@ -77,7 +77,7 @@ mkdir -p ../tmp/lua
 find . -type f -name '*.lua' | while read absfile; do
 	file="lua/$absfile"
 	echo "Compiling $file..."
-	luac52 -o "../tmp/$file.luac" "$absfile" && (
+	luac5.2 -o "../tmp/$file.luac" "$absfile" && (
 		rm "/tmp/$file"
 		mv "/tmp/$file.luac" "/tmp/$file"
 	) || (
