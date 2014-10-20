@@ -1,7 +1,5 @@
 #!/bin/bash
 
-path %programfiles(x86)%\lua\5.1\;$path;%programfiles(x86)%\Steam\SteamApps\common\GarrysMod\bin
-
 reldir() {
 	# both $1 and $2 are absolute paths beginning with /
 	# returns relative path to $2/$target from $1/$source
