@@ -316,6 +316,7 @@ function SWEP:EnableThirdPerson(player)
 	entity:SetModel(player:GetModel())
 	entity:Spawn()
 	entity:SetAngles(player:GetAngles())
+	entity:SetVelocity(player:GetVelocity())
 	entity:SetMoveType(MOVETYPE_NONE)
 	entity:SetParent(player)
 	entity:SetOwner(player)
@@ -323,7 +324,7 @@ function SWEP:EnableThirdPerson(player)
 	entity:SetRenderMode(RENDERMODE_NONE)
 	entity:SetSolid(SOLID_NONE)
 	player:SetViewEntity(entity)
-	
+
 	player:SetNetworkedBool("thirdperson", true)
 end
 
