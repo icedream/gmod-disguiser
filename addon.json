@@ -5,6 +5,7 @@
 	"ignore"	:
 	[
 		"*.git*",
-		"*.svn*"
+		"*.svn*",
+		"addon.json"
 	]
 }
