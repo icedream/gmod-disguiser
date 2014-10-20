@@ -46,8 +46,8 @@ copy_flt() {
 	source="$1"
 	target="$2"
 
-	find "$source" -type "d" -not -path "./tmp/*"  | while read i; do mkdir -p "$target/$(reldir $source $i)"; done
-	find "$source" -name "$filter" -type "f" -not -path "./tmp/*"  | while read i; do cp "$i" "$target/$(reldir $source $i)"; done
+	find "$source" -type "d" | while read i; do mkdir -p "$target/$(reldir $source $i)"; done
+	find "$source" -name "$filter" -type "f" | while read i; do cp "$i" "$target/$(reldir $source $i)"; done
 }
 
 mkdir -p builds
@@ -89,7 +89,7 @@ done
 popd
 
 # Create the GMA file
-gmad create -folder "tmp" -out "builds/disguiser_swep.gma"
+gmad create -warninvalid -folder "tmp" -out "builds/disguiser_swep.gma"
 
 # Clean up
 rm -rf tmp
