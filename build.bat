@@ -5,6 +5,44 @@ path %programfiles(x86)%\lua\5.1\;%path%;%programfiles(x86)%\Steam\SteamApps\com
 if not exist builds mkdir builds
 mkdir tmp
 
+:: Root path
+set workspace=%cd%
+set workspacelentmp=%workspace%
+set workspacelen=1
+:workspacelencalc
+set /a workspacelen=!workspacelen!+1
+set workspace=!workspace:~1!
+if "%workspace%"=="" goto compile
+goto workspacelencalc
+
+:compileerr
+echo ERROR: Compilation failed.
+exit /B -1
+
+:compile
+echo Workspace: %workspace% (%workspacelen%)
+:: Compile LUA files
+pushd lua
+for /r %%i in (.) do (
+	set absdir=%%i
+	set directory=!absdir:~%workspacelen%,-2!
+
+	echo Creating !directory!...
+	mkdir "..\tmp\!directory!"
+)
+for /r %%i in (*.lua) do (
+	set absfile=%%i
+	set file=!absfile:~%workspacelen%!
+
+	echo Compiling !file!...
+	luac52 -o "..\tmp\!file!" "!absfile!"
+	if %errorlevel% NEQ 0 (
+		echo Could not compile !file!, only copying...
+		copy !absfile! "..\tmp\!file!"
+	)
+)
+popd
+
 :: Optimize LUA files
 ::set cutofflen=
 ::set foo=%~dp0
@@ -34,4 +72,4 @@ gmad create -folder "tmp" -out "builds\disguiser_swep.gma"
 
 :: Clean up
 rmdir /q /s tmp
-pause
+::pause
