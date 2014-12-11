@@ -46,8 +46,12 @@ copy_flt() {
 	source="$1"
 	target="$2"
 
-	find "$source" -type "d" -not -path "$target" | while read i; do mkdir -p "$target/$(reldir $source $i)"; done
-	find "$source" -name "$filter" -type "f" -not -path "$target" | while read i; do cp "$i" "$target/$(reldir $source $i)"; done
+	find "$source" -type "d" -not -path "$target" | while read i; do
+		mkdir -p "$target/$(reldir $source $i)"
+	done
+	find "$source" -name "$filter" -type "f" -not -path "$target" | while read i; do
+		cp "$i" "$target/$(reldir $source $i)"
+	done
 }
 
 mkdir -p builds

@@ -6,6 +6,11 @@
 	[
 		"*.git*",
 		"*.svn*",
-		"addon.json"
+		"builds*",
+		"tools*",
+		"*.bat",
+		"*.sh",
+		"*.md",
+		"LICENSE.txt"
 	]
 }
